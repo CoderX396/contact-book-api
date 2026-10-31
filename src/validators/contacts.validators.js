@@ -53,4 +53,4 @@ const handleValidation = (req, res, next) => {
 
 const validateContact = [...contactRules, handleValidation];
 
-module.exports = { validateContact };
+module.exports = { validateContact, handleValidation };

@@ -4,6 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 
+const authRouter = require('./routes/auth.routes');
+const adminRouter = require('./routes/admin.routes');
 const contactsRouter = require('./routes/contacts.routes');
 const requestTimer = require('./middlewares/requestTimer');
 const notFound = require('./middlewares/notFound');
@@ -44,7 +46,9 @@ const contactsLimiter = rateLimit({
 });
 app.use('/contacts', contactsLimiter);
 
-// 7. Rutas (los middlewares de ruta requireClientId y validateApiKey van dentro).
+// 7. Rutas (los middlewares de ruta verifyToken, checkRole y requireClientId van dentro).
+app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 app.use('/contacts', contactsRouter);
 
 // 8. Si nada respondió, 404. Y al final, el manejador central de errores.
